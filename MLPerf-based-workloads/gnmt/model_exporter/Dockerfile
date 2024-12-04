@@ -9,9 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget \
 # clone and patch
 WORKDIR /workspace 
 COPY . .
-RUN git clone --recursive https://github.com/mlcommons/inference \
-    && cd inference/translation/gnmt/tensorflow/ \
+RUN git clone  https://github.com/mlcommons/inference \
+    && cd inference \
     && git checkout r2.1 \
+    && cd translation/gnmt/tensorflow/ \
     && cp /workspace/patch/* ./nmt \
     && chmod +x ./download_dataset.sh ./verify_dataset.sh  ./download_trained_model.sh \
     && ./download_dataset.sh && ./verify_dataset.sh && ./download_trained_model.sh \
