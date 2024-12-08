@@ -1,2 +1,5 @@
 Flask
 waitress
+onnxruntime
+onnxruntime-gpu
+onnxruntime_genai
