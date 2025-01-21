@@ -11,20 +11,18 @@ export const options = {
       executor: 'constant-vus',
       startTime: '0s',
       vus: 10,
-      duration: '2m',
+      duration: '1m',
    },
   },
 };
-const gateway = 'http://10.103.51.65:8080'
+const gateway = 'http://10.244.1.60:8080'
 const image = open('butterfly.jpg', 'b');
-const resnetdata = {
-  "image": encoding.b64encode(image)
-}
+
 const fd = new FormData();
-fd.append('image', http.file(image, 'image.png', 'image/png'));
+fd.append('payload', http.file(image, 'image.png', 'image/png'));
 let resnet = {
         method: 'POST',
-        url: gateway + '/function/resnet/predict',
+        url: gateway + '/function/test-fastpod/predict',
         //url: 'http://10.107.235.205:8080/predict',
 	//url: 'http://localhost:5000/predict',
         body: fd.body(), 
