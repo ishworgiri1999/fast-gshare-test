@@ -1,0 +1,5 @@
+flask==2.3.3
+openai-whisper==20231117
+torch>=1.13.0
+torchaudio>=0.13.0
+waitress

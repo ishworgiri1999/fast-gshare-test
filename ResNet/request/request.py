@@ -7,17 +7,20 @@ arg_p.add_argument("-i", "--image", required=True,
 
 args = vars(arg_p.parse_args()) 
 
-# REST_API_URL = "http://localhost:5000/predict"
+REST_API_URL = "http://localhost:8081/predict"
 #REST_API_URL = "http://10.244.0.119:8080/predict"
-GATEWAY = "http://10.244.1.60:8080"
-REST_API_URL = GATEWAY + "/function/test-fastpod/predict"
+GATEWAY = "http://localhost:8081"
+# REST_API_URL = GATEWAY + "/function/test-fastpod/predict"
 IMAGE_PATH = args["image"]
 
-image = open(IMAGE_PATH, "rb")
+image = open(IMAGE_PATH, "rb").read()
 payload = {"payload": image}
 
-r = requests.post(REST_API_URL, files=payload).json()
-
+print(REST_API_URL)
+r = requests.post(REST_API_URL, files=payload)
+if r.status_code != 200:
+    print(f"Error: {r.text}")
+print(r.json())
 if r["success"]:
     print(r)
     for (i, result) in enumerate(r["predictions"]):

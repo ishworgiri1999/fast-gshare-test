@@ -10,20 +10,18 @@ export const options = {
     contacts: {
       executor: 'constant-vus',
       startTime: '0s',
-      vus: 20,
-      duration: '20s',
+      vus: 10,
+      duration: '2m',
    },
   },
 };
-const gateway = 'http://localhost:8085'
-const image = open('butterfly.jpg', 'b');
-
+//Task specific
+const wavefile = open('en.wav', 'b');
 const fd = new FormData();
-fd.append('payload', http.file(image, 'butterfly.jpg', 'image/jpeg'));
-let resnet = {
+fd.append('data', http.file(wavefile, 'en.wav'));
+let rnnt = {
         method: 'POST',
-        url:"http://localhost:5000/predict",
-        //url: gateway + '/function/fastfunc-resnet-2/predict',	
+	url: 'http://localhost:5000/predict',
         body: fd.body(), 
         params: {
             headers: {
@@ -32,9 +30,9 @@ let resnet = {
         },
 };
 export default function () {
-  const res = http.post(resnet.url, resnet.body, resnet.params)
+  const res = http.post(rnnt.url, rnnt.body, rnnt.params)
   check(res, {
     'is status 200': (r) => r.status === 200,
-    'check body': (r) => r.body.includes('butterfly'),
+    'check body': (r) => r.body.includes('knock'),
   });
 }
