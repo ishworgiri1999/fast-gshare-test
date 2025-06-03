@@ -13,6 +13,7 @@ app = Flask(__name__)
 
 # Global variable to store the model (for reuse across requests)
 model = None
+model_lock = threading.Lock()
 
 def load_model():
     """Load Whisper model from local file with optimizations for serverless"""
@@ -66,12 +67,13 @@ def predict():
             with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
                 audio_file.save(tmp_file.name)
                 # Only lock the model inference part
+                with model_lock:
                     # Transcribe audio
-                result = whisper_model.transcribe(
-                    tmp_file.name,
-                    fp16=False,  # Disable fp16 for CPU compatibility
-                    task='transcribe'
-                )
+                    result = whisper_model.transcribe(
+                        tmp_file.name,
+                        fp16=False,  # Disable fp16 for CPU compatibility
+                        task='transcribe'
+                    )
                 os.unlink(tmp_file.name)
             output = result["text"].strip()
             data["success"] = True
