@@ -17,9 +17,7 @@ export const options = {
 };
 const gateway = 'http://localhost:8085'
 const image = open('butterfly.jpg', 'b');
-const resnetdata = {
-  "image": encoding.b64encode(image)
-}
+
 const fd = new FormData();
 fd.append('payload', http.file(image, 'butterfly.jpg', 'image/jpeg'));
 let resnet = {

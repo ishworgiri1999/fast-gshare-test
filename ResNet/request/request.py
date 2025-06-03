@@ -22,8 +22,10 @@ if r.status_code != 200:
     print(f"Error: {r.text}")
 print(r.json())
 if r["success"]:
+    print(r)
     for (i, result) in enumerate(r["predictions"]):
         print("{}. {}: {:.4f}".format(i + 1, result["label"],
             result["probability"]))
 else:
+    print(r)
     print("Failed request")
