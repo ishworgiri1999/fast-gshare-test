@@ -151,7 +151,7 @@ def main_route(path):
     #print(answer)
     #print(json.dumps(answers, indent=4))
 
-    response = flask.jsonify({"message": "success"})
+    response = flask.jsonify({"message": "success", "answer": answer, "answers": answers})
     response.status_code = 200
     #ret = handler.handle(request.get_data(as_text=as_text))
     #return str(out)
