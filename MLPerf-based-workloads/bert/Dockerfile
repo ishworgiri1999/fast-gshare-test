@@ -1,8 +1,8 @@
 ##############################################################################
 # Bert Setup
 FROM --platform=${TARGETPLATFORM:-linux/amd64}  ghcr.io/openfaas/of-watchdog:0.9.6 as watchdog
-FROM pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
-RUN apt-get update && apt-get install -y git
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+RUN apt-get update -y && apt-get install -y git
 ENV BERT_PREP_WORKING_DIR /workspace/bert/data
 
 WORKDIR /workspace

@@ -39,4 +39,5 @@ def predict():
 if __name__ == "__main__":
     print("Loading PyTorch model, and starting Flask server")       
     initialize()
+    print("Server started")
     serve(app, host="0.0.0.0", port=5000)

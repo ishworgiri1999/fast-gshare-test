@@ -6,9 +6,13 @@ FROM --platform=${TARGETPLATFORM:-linux/amd64} pytorch/pytorch:2.3.1-cuda12.1-cu
 ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    curl \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        apt-utils \
+        ca-certificates \
+        ffmpeg \
+        curl \
+    && apt-get -f install \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -25,12 +29,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY index.py .
 
-# Create non-root user
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
-USER appuser
 
 # Environment variables
-ENV WHISPER_MODEL=small
+ENV WHISPER_MODEL=tiny
 ENV PRELOAD_MODEL=true
 ENV FLASK_ENV=production
 

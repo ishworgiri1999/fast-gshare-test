@@ -4,6 +4,7 @@ from waitress import serve
 
 import torch 
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline 
+import threading
 
 
 
@@ -13,6 +14,8 @@ from waitress import serve
 app = Flask(__name__)
 import os
 
+# Add a lock for thread-safe model access
+model_lock = threading.Lock()
 
 model_path = os.getenv("MODEL_PATH") if os.getenv("MODEL_PATH") else "/models/phi3-mini-4k-pytorch/"
 max_token= int(os.getenv("MAX_NEW_TOKENS")) if os.getenv("MAX_NEW_TOKENS") else 4096
@@ -75,10 +78,11 @@ def main_route(path):
     "do_sample": False, 
     } 
 
-    output = pipe(generateMessage(question), **generation_args) 
-    print('================\n')
-    print(output[0]['generated_text'])
-
+    # Use lock to ensure only one request processes at a time
+    with model_lock:
+        output = pipe(generateMessage(question), **generation_args) 
+        print('================\n')
+        print(output[0]['generated_text'])
 
     
     response = jsonify(
@@ -92,5 +96,5 @@ def main_route(path):
 
 if __name__ == "__main__":
     print("Server started at port 5000")
-
+    # Reduce connection limit to prevent too many concurrent requests
     serve(app, host="0.0.0.0", port=5000, backlog=10, connection_limit=10)

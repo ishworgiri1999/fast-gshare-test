@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 import torch
 from torch.utils.cpp_extension import BuildExtension, CppExtension
 
-extra_compile_args = ['-std=c++14', '-fPIC']
+extra_compile_args = ['-std=c++17', '-fPIC']
 warp_rnnt_path = "../build"
 
 if torch.cuda.is_available() or "CUDA_HOME" in os.environ:

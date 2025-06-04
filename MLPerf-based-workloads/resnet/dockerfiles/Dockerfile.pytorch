@@ -1,7 +1,7 @@
 # FaaS watchdog image
 FROM --platform=${TARGETPLATFORM:-linux/amd64}  ghcr.io/openfaas/of-watchdog:0.9.6 as watchdog
 # Base Image
-FROM pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime 
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace

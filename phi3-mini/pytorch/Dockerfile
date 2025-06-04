@@ -1,7 +1,7 @@
 ##############################################################################
 # Multi-stage build
 FROM ghcr.io/openfaas/of-watchdog:0.9.6 as watchdog
-FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime
+FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
 
 
 # Set environment variables

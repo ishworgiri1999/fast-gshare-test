@@ -47,7 +47,7 @@ download_onnx_model: create_directories
 .PHONY: build_docker_pytoch
 build_docker_pytoch: 
 	@cp dockerfiles/Dockerfile.pytorch Dockerfile
-	@docker build -t resnet:pytorch .
+	@docker buildx build --platform linux/amd64 -t ishworgiri/resnet:pytorch .
         
 .PHONY: build_docker_tensorflow
 build_docker_tensorflow: 

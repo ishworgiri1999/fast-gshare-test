@@ -9,7 +9,7 @@ all: build
 
 # Build the Docker image
 build:
-	docker build -t $(IMAGE_NAME) .
+	docker buildx build --platform=linux/amd64 -t $(IMAGE_NAME) .
 
 
 .PHONY: all build run stop rm clean

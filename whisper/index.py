@@ -94,7 +94,7 @@ if __name__ == '__main__':
     # """Run the app with Waitress for production use"""
     host = "0.0.0.0"
     port = int(os.environ.get('PORT', 5000))
-    print(f"Starting Whisper Flask app with Waitress...")
+    print(f"Starting Whisper Flask app with Waitress....")
     print(f"Listening on http://{host}:{port}")
     serve(app, host="0.0.0.0", port=5000, backlog=10, connection_limit=10)
     
